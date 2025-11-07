@@ -2,9 +2,16 @@
 
 set -euo pipefail
 
+default_commits=(
+  82613aebb7d5c953c326afdece0ff8c6e9311ca9
+)
+
 if [[ $# -eq 0 ]]; then
-  echo "Usage: $0 <commit-sha> [<commit-sha> ...]" >&2
-  exit 1
+  if [[ ${#default_commits[@]} -eq 0 ]]; then
+    echo "No commits specified and default list empty; aborting." >&2
+    exit 1
+  fi
+  set -- "${default_commits[@]}"
 fi
 
 while [[ $# -gt 0 ]]; do
